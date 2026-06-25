@@ -18,53 +18,38 @@ Implementación práctica de un curso de SQL avanzado orientado a ingeniería de
 ## 🏛️ Arquitectura Medallion
 
 ```mermaid
-flowchart LR
-    subgraph SOURCES["📂 Fuentes de Datos"]
-        CRM["CRM System<br/>cust_info.csv<br/>prd_info.csv<br/>sales_details.csv"]
-        ERP["ERP System<br/>CUST_AZ12.csv<br/>LOC_A101.csv<br/>PX_CAT_G1V2.csv"]
+flowchart TD
+    A["📂 CRM + ERP<br/>6 CSV files"] --> B
+
+    subgraph B["🥉 Bronze Layer"]
+        B1[6 raw tables]
     end
 
-    subgraph BRONZE["🥉 Bronze Layer"]
-        B1[crm_cust_info]
-        B2[crm_prd_info]
-        B3[crm_sales_details]
-        B4[erp_cust_az12]
-        B5[erp_loc_a101]
-        B6[erp_px_cat_g1v2]
+    subgraph C["🥈 Silver Layer"]
+        C1[6 cleaned tables]
     end
 
-    subgraph SILVER["🥈 Silver Layer"]
-        S1[crm_cust_info]
-        S2[crm_prd_info]
-        S3[crm_sales_details]
-        S4[erp_cust_az12]
-        S5[erp_loc_a101]
-        S6[erp_px_cat_g1v2]
+    subgraph D["🥇 Gold Layer"]
+        D1[dim_customers]
+        D2[dim_products]
+        D3[fact_sales]
     end
 
-    subgraph GOLD["🥇 Gold Layer"]
-        G1[dim_customers]
-        G2[dim_products]
-        G3[fact_sales]
+    subgraph E["📊 Analytics"]
+        E1[Measures]
+        E2[Rankings]
+        E3[Magnitude]
     end
 
-    subgraph ANALYTICS["📊 Analytics"]
-        A1[Measures]
-        A2[Rankings]
-        A3[Magnitude]
-    end
+    B -->|Limpieza + Estandarización| C
+    C -->|Modelado Dimensional| D
+    D --> E
 
-    CRM --> BRONZE
-    ERP --> BRONZE
-    BRONZE -->|清洗 + 标准化| SILVER
-    SILVER -->|建模| GOLD
-    GOLD --> ANALYTICS
-
-    style SOURCES fill:#f9f9f9,stroke:#333
-    style BRONZE fill:#CD7F32,stroke:#8B4513,color:#fff
-    style SILVER fill:#C0C0C0,stroke:#808080,color:#000
-    style GOLD fill:#FFD700,stroke:#DAA520,color:#000
-    style ANALYTICS fill:#4CAF50,stroke:#2E7D32,color:#fff
+    style A fill:#f9f9f9,stroke:#333
+    style B fill:#CD7F32,stroke:#8B4513,color:#fff
+    style C fill:#C0C0C0,stroke:#808080,color:#000
+    style D fill:#FFD700,stroke:#DAA520,color:#000
+    style E fill:#4CAF50,stroke:#2E7D32,color:#fff
 ```
 
 | Capa | Objetos | Descripción |

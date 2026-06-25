@@ -1,0 +1,65 @@
+DROP TABLE IF EXISTS silver.crm_cust_info CASCADE;
+CREATE TABLE silver.crm_cust_info (
+        cst_id INT ,
+        cst_key VARCHAR(50),
+        cst_firstname VARCHAR(50),
+        cst_lastname VARCHAR(50),
+        cst_marital_status VARCHAR(20),
+        cst_gnder VARCHAR(50),
+        cst_create_date DATE,
+        dwh_create_date TIMESTAMP DEFAULT NOW()
+);
+DROP TABLE IF EXISTS silver.crm_prd_info CASCADE;
+CREATE TABLE silver.crm_prd_info(
+    prd_id INT PRIMARY KEY,
+    cat_id VARCHAR(50),
+    prd_key VARCHAR(50),
+    prd_nm VARCHAR(50),
+    prd_cost INT,
+    prd_line VARCHAR(50),
+    prd_start_dt DATE,
+    prd_end_dt DATE,
+    dwh_create_date TIMESTAMP DEFAULT NOW()
+
+);
+DROP TABLE IF EXISTS silver.crm_sales_details CASCADE;
+CREATE TABLE silver.crm_sales_details (
+    sls_ord_num VARCHAR(50),
+    sls_prd_key VARCHAR(50),
+    sls_cust_id INT,
+    sls_ord_dt DATE,
+    sls_ship_dt DATE,
+    sls_due_dt DATE,
+    sls_sales INT,
+    sls_quantity INT,
+    sls_price INT,
+    dwh_create_date TIMESTAMP DEFAULT NOW()
+
+);
+DROP TABLE IF EXISTS silver.erp_cust_az12 CASCADE;
+CREATE TABLE silver.erp_cust_az12 (
+    cid VARCHAR(50),    
+    bdate DATE,
+    gen VARCHAR(20),
+    dwh_create_date TIMESTAMP DEFAULT NOW()
+);
+
+-- Tabla para LOC_A101.csv
+DROP TABLE IF EXISTS silver.erp_loc_a101 CASCADE;
+CREATE TABLE silver.erp_loc_a101 (
+    cid VARCHAR(50),
+    cntry VARCHAR(100),
+    dwh_create_date TIMESTAMP DEFAULT NOW()
+
+);
+
+-- Tabla para PX_CAT_G1V2.csv
+DROP TABLE IF EXISTS silver.erp_px_cat_g1v2 CASCADE;
+CREATE TABLE silver.erp_px_cat_g1v2 (
+    id VARCHAR(50),
+    cat VARCHAR(100),
+    subcat VARCHAR(100),
+    maintenance VARCHAR(10),
+    dwh_create_date TIMESTAMP DEFAULT NOW()
+
+);
